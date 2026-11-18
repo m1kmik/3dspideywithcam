@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dq7em52kqbrd"]
+
+[ext_resource type="Script" uid="uid://d33e6qruufi8k" path="res://Scenes/Player/player.gd" id="1_a3d8c"]
+[ext_resource type="ArrayMesh" uid="uid://bbo1y1nr52ha3" path="res://Assets/Spider-Man/spiderman.obj" id="1_uvnfx"]
+[ext_resource type="Script" uid="uid://vhvc8q6bboh" path="res://Scenes/Player/camera.gd" id="3_xpcdj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xepy2"]
+height = 1.6008301
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xpcdj"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1578784051]
+script = ExtResource("1_a3d8c")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=530056228]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0.6003113, 0)
+shape = SubResource("CapsuleShape3D_xepy2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=415651089]
+transform = Transform3D(-0.02, 0, -1.7484555e-09, 0, 0.02, 0, 1.7484555e-09, 0, -0.02, 0, 0, 0)
+mesh = ExtResource("1_uvnfx")
+
+[node name="Camera" type="Node3D" parent="." unique_id=1123713113 node_paths=PackedStringArray("character")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6792053, 0.9219647, -0.28901565)
+script = ExtResource("3_xpcdj")
+character = NodePath("..")
+
+[node name="EdgeSpringArm" type="SpringArm3D" parent="Camera" unique_id=892298985]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+spring_length = 0.5
+
+[node name="RearSpringArm" type="SpringArm3D" parent="Camera/EdgeSpringArm" unique_id=121405537]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+spring_length = 1.5
+
+[node name="Camera3D" type="Camera3D" parent="Camera/EdgeSpringArm/RearSpringArm" unique_id=1680741699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 1)
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="Camera" unique_id=1312356045]
+shape = SubResource("SphereShape3D_xpcdj")
